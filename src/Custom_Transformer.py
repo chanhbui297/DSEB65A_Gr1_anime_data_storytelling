@@ -90,7 +90,7 @@ class FrequencyGrouper(BaseEstimator, TransformerMixin):
 
     def fit(self, X, y=None):
         for col in self.columns:
-            min_f = self.min_freq.get(col, 10)  # nếu thiếu thì gán mặc định 10
+            min_f = self.min_freq.get(col, 10)  # default frequency is 10
 
             temp = X[col].apply(self._ensure_list)
 
@@ -143,7 +143,7 @@ class MultiLabelBinarizerDF(BaseEstimator, TransformerMixin):
             mlb.fit(X[col])
             self.encoders[col] = mlb
 
-            # lưu tên cột sinh ra
+            # store new feature name
             for c in mlb.classes_:
                 self.output_features_.append(f"{col}__{c}")
 
@@ -205,14 +205,8 @@ class CyclicalMonthEncoder(BaseEstimator, TransformerMixin):
 
 
 # Create New Feature
-def create_ratio_fav_mem(df, fav_col='Favorites', mem_col='Members'):
-    df = df.copy()
-    df['Fav_Mem_Ratio'] = df[fav_col] / (df[mem_col] + 1e-6)
-    return df[['Fav_Mem_Ratio']]
-
 def create_interactions(df, pairs=[
-    ('Episodes', 'Duration Minutes'),
-    ('Members', 'Favorites')
+    ('Episodes', 'duration_minutes')
 ]):
     df = df.copy()
     out = {}
@@ -230,40 +224,93 @@ def create_list_counts(df, columns):
 
 
 class FeatureEngineering(BaseEstimator, TransformerMixin):
-    def __init__(self, 
-                 fav_col='Favorites', 
-                 mem_col='Members',
-                 year_col='Aired Year',
+    def __init__(self,
+                 year_col='air_year',
                  degree=2,
                  list_columns=['Genres', 'Producers', 'Studios'],
-                 interaction_pairs=[
-                     ('Episodes', 'Duration Minutes'),
-                     ('Members', 'Favorites')
-                 ]):
-        
-        self.fav_col = fav_col
-        self.mem_col = mem_col
+                 interaction_pairs=[('Episodes', 'duration_minutes')],
+                 duration_col='duration_minutes',
+                 duration_q=4,
+                 episodes_col='Episodes',
+                 episodes_q=4):
+
+        # Inputs
         self.year_col = year_col
         self.degree = degree
         self.list_columns = list_columns
         self.interaction_pairs = interaction_pairs
+        self.duration_col = duration_col
+        self.duration_q = duration_q
+        self.episodes_col = episodes_col
+        self.episodes_q = episodes_q
+
+        # Will be populated in fit()
+        self.duration_bins = None
+        self.episodes_bins = None
+
+        # Meaningful labels
+        self.duration_labels = ["Very Short", "Short", "Medium", "Long"]
+        self.episodes_labels = ["Mini_Series", "Short_Series",
+                                "Standard_Series", "Long_Running"]
 
     def fit(self, X, y=None):
+        X = X.copy()
+
+        # --- Compute quantile bins (train only) ---
+        self.duration_bins = np.unique(
+            np.quantile(
+                X[self.duration_col].dropna(),
+                np.linspace(0, 1, self.duration_q + 1)
+            )
+        )
+
+        self.episodes_bins = np.unique(
+            np.quantile(
+                X[self.episodes_col].dropna(),
+                np.linspace(0, 1, self.episodes_q + 1)
+            )
+        )
+
         return self
 
     def transform(self, X):
         X = X.copy()
 
-        # --- Create new features ---
-        df_ratio = create_ratio_fav_mem(X, self.fav_col, self.mem_col) # Ratio of Favorite/ Member
-        df_list  = create_list_counts(X, self.list_columns) # Count number of Genre, Producers, Stuiods
-        df_inter = create_interactions(X, self.interaction_pairs) # Cross Feature Interactions
+        # Count list features
+        df_list = create_list_counts(X, self.list_columns)
+
+        # Interaction features
+        df_inter = create_interactions(X, self.interaction_pairs)
+
+        # --- DurationCat ---
+        dur_numeric = pd.cut(
+            X[self.duration_col],
+            bins=self.duration_bins,
+            labels=False,
+            include_lowest=True
+        )
+
+        dur_labels = dur_numeric.map(
+            lambda x: self.duration_labels[int(x)] if pd.notna(x) else np.nan
+        )
+
+        df_dur = pd.DataFrame({'DurationCat': dur_labels}, index=X.index)
+
+        # --- EpisodesCat ---
+        ep_numeric = pd.cut(
+            X[self.episodes_col],
+            bins=self.episodes_bins,
+            labels=False,
+            include_lowest=True
+        )
+
+        ep_labels = ep_numeric.map(
+            lambda x: self.episodes_labels[int(x)] if pd.notna(x) else np.nan
+        )
+
+        df_ep = pd.DataFrame({'EpisodesCat': ep_labels}, index=X.index)
 
         # Combine all new features
-        X_new = pd.concat([X, df_ratio, df_list, df_inter], axis=1)
+        X_new = pd.concat([X, df_list, df_inter, df_dur, df_ep], axis=1)
 
         return X_new
-    
-
-
-
