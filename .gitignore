@@ -1,7 +1,3 @@
-# Data
-data/
-models/*.pkl
-
 # System
 __pycache__/
 .ipynb_checkpoints/
