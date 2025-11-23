@@ -1,0 +1,12 @@
+# Data
+data/
+models/*.pkl
+
+# System
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+
+# Env
+.env
+venv/
