@@ -206,7 +206,7 @@ class CyclicalMonthEncoder(BaseEstimator, TransformerMixin):
 
 # Create New Feature
 def create_interactions(df, pairs=[
-    ('Episodes', 'duration_minutes')
+    ('Episodes', 'Duration Minutes')
 ]):
     df = df.copy()
     out = {}
@@ -225,11 +225,11 @@ def create_list_counts(df, columns):
 
 class FeatureEngineering(BaseEstimator, TransformerMixin):
     def __init__(self,
-                 year_col='air_year',
+                 year_col='Aired Year',
                  degree=2,
                  list_columns=['Genres', 'Producers', 'Studios'],
-                 interaction_pairs=[('Episodes', 'duration_minutes')],
-                 duration_col='duration_minutes',
+                 interaction_pairs=[('Episodes', 'Duration Minutes')],
+                 duration_col='Duration Minutes',
                  duration_q=4,
                  episodes_col='Episodes',
                  episodes_q=4):
