@@ -222,21 +222,6 @@ def create_list_counts(df, columns):
         out[col + "_Count"] = df[col].apply(lambda x: len(x) if isinstance(x, list) else 0)
     return pd.DataFrame(out, index=df.index)
 
-def month_to_season(m):
-    if pd.isna(m):
-        return np.nan
-    m = int(m)
-    if m in [1, 2, 3]:
-        return "Winter"
-    elif m in [4, 5, 6]:
-        return "Spring"
-    elif m in [7, 8, 9]:
-        return "Summer"
-    elif m in [10, 11, 12]:
-        return "Fall"
-    else:
-        return np.nan
-
 class FeatureEngineering(BaseEstimator, TransformerMixin):
     def __init__(self,
                  year_col='Aired Year',
@@ -326,14 +311,9 @@ class FeatureEngineering(BaseEstimator, TransformerMixin):
 
         df_ep = pd.DataFrame({'EpisodesCat': ep_labels}, index=X.index)
 
-        # --- SeasonCat từ Aired Month ---
-        df_season = pd.DataFrame({
-            'SeasonCat': X[self.month_col].apply(month_to_season)
-        }, index=X.index)
-
         # === Combine all new features ===
         X_new = pd.concat(
-            [X, df_list, df_inter, df_dur, df_ep, df_season],
+            [X, df_list, df_inter, df_dur, df_ep],
             axis=1
         )
 
