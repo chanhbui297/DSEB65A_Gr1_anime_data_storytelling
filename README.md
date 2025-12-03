@@ -369,7 +369,7 @@ Produce final, fully processed Train/Test sets and store the fitted pipeline ins
 
 --- 
 
-   **C.4. CyclicalMonthEncoder**: 
+   **C.4. Class CyclicalMonthEncoder**: 
 
    - **Purpose**: Convert months to sine/cosine features  
       - `Aired Month` are cyclical; month 12 is close to month 1, but ordinal encoding does not reflect this
@@ -380,7 +380,7 @@ Produce final, fully processed Train/Test sets and store the fitted pipeline ins
       
 --- 
 
-   **C.5. FeatureEngineering**: 
+   **C.5. Class FeatureEngineering**: 
    - **Purpose**:  
       - Add domain–relevant features that models cannot automatically create.
 
@@ -534,7 +534,7 @@ Full Pipeline
       - Clean: Normal distribution centered at 6.39, revealing true quality spectrum
    
    - **Conclusion**: 
-      - *The actual `Score` distribution is bell-shape -> no need for transformation
+      - *The actual `Score` distribution is bell-shape -> no need for transformation*
       - *True high-scoring animes (Score >8.5) are rare, not artificially common*
 
 ---
