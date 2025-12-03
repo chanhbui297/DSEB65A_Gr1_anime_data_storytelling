@@ -332,9 +332,8 @@ Produce final, fully processed Train/Test sets and store the fitted pipeline ins
 
 --- 
 
-### **C. Custom Transformers: Domain-specific handling**
+### **C. Custom Transformers (Using `BaseEstimator` and `TransformerMixin`)**
 
-This project integrates several **custom-built sklearn-compatible** transformers, designed specifically for messy anime metadata. Each transformer is then implemented using `BaseEstimator`** and `TransformerMixin`.
 --- 
 
    **C.1. Class MultiListModeImputer**: 
@@ -506,11 +505,8 @@ Full Pipeline
 - Each Theme will have 4 main steps: Issues Overview -> Solutions -> Visual Evidence (Raw vs Cleaned) -> Deeper Visual Analysis for Business Recommendation
 - The 4 main Theme Feature:  
       - Theme A: Target Variable (Score)
-
       - Theme B: Market Factors (Type, Source)
-      
       - Theme C: Creative Factors (Genres, Producers, Studios)
-      
       - Theme D: Release Strategy (Aired, Episodes, Duration)
 
 ---
