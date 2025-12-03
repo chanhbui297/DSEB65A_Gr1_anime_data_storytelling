@@ -189,19 +189,25 @@ anime-data-storytelling/
 ### **2. Key Discoveries from Diagnostic EDA**
 
 - **Type Mismatches**: Critical numeric columns (Score, Episodes, Rank) stored as strings
+
 - **Hidden Missingness**: 
    - Instead of NaN, Missing values are stored as 'Unknown', 'not available', 'n/a', 'na', 'tbd', 'tba' 
    - All columns has missing values. Especially, Licensors has the highest pperrcentage of missing with over 80%. 
+
 - **Skewed Distributions**: Engagement metrics (Members, Favorites) with 99th percentile outliers
 - **Inconsistent Formating**: 
    - Datetime format: '1-Sep-01', 'Oct 20, 1999 to ?'
    - Durations: '3 min', '3 min per ep'
+
 - **Multi-label in Genre, Producers, Studios**: ['Action','Sci-fi'] make it impossible for running model
+
 - **Ghost Records**: 1,330 entries with zero engagement metrics and no metadata
+
 - **Data Integrity and Misclassification in Type, Ratings, Duration, Episodes**: 
    - Movie with `Episodes > 1`, or Movies with less than 40 minutes
    - Labeled with Adult genre but has an All-Ages Rating 
    - Episode with Durations > 1000 minutes
+
 - **Date Paradoxes**: 7 records with end dates before start dates
 
 ---
@@ -217,7 +223,9 @@ This diagnostic stage sets the foundation for Phase 2: **Data Preparation & Pipe
 
 ### **1. Overview**
 **Notebook:** `02_Data_Preprocessing.ipynb` and `Customtransformer.py` 
+
 **Goal**: Build reproducible cleaning and transformation pipeline that handle issues stated in PHASE 1
+
 **Outputs**:
 - `data/processed/prepared_data.csv` (cleaned dataset)
 - `models/processing_pipeline.pkl` (reusable pipeline)
@@ -228,9 +236,9 @@ This diagnostic stage sets the foundation for Phase 2: **Data Preparation & Pipe
 
 ### **2. Processing Steps**:
 
-#### **2.1. Pre-split cleaning (Structural Fixes Before Train/Test Split)**
+### **2.1. Pre-split cleaning (Structural Fixes Before Train/Test Split)**
 
-#### **A. Goal**  
+### **A. Goal**  
 Transform the raw file **`anime-dataset-2023.csv`** into a clean, structurally consistent dataset **`prepared_data.csv`**, ensuring:  
 - Correct data types  
 - Standardized formats  
@@ -239,7 +247,7 @@ Transform the raw file **`anime-dataset-2023.csv`** into a clean, structurally c
 
 ---
 
-#### **B. Critical Principle — Why these steps MUST happen *before* splitting**
+### **B. Critical Principle — Why these steps MUST happen *before* splitting**
 
 These operations address **structural and domain-logic corrections**, not statistical learning.  
 Applying them post-split would produce inconsistent schemas between train/test.
@@ -253,7 +261,7 @@ Applying them post-split would produce inconsistent schemas between train/test.
 
 ---
 
-#### **C. Main Steps (Structural Cleaning)**
+### **C. Main Steps (Structural Cleaning)**
 
 **Step 1.  Standardize "NaN-like" Values**  
 - **Strategy**: Many object columns use string literals to represent missing data. We'll replace them with np.NaN
@@ -290,16 +298,16 @@ Applying them post-split would produce inconsistent schemas between train/test.
     
 ---
 
-#### **2.2.  Splitting X, y and Train, Test set**
+### **2.2.  Splitting X, y and Train, Test set**
 
-#### **A. Spliting Target Variable - `Score`**
+### **A. Spliting Target Variable - `Score`**
 
 ```bash
 X = df1.drop('Score', axis=1)
 y = df1['Score']
 ```
 
-#### **B. Spliting Train and Test set (80/20)`**
+### **B. Spliting Train and Test set (80/20)`**
 ```bash
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -311,7 +319,7 @@ The shape after splitting is:
 
 ---
 
-#### **2.3.  Post-Split Pipeline (Stateful Transformations)**
+### **2.3.  Post-Split Pipeline (Stateful Transformations)**
 
 ### **A. Goal**  
 Produce final, fully processed Train/Test sets and store the fitted pipeline inside `models/` for use in  **PHASE 4 — Modeling Comparison**.
@@ -322,12 +330,14 @@ Produce final, fully processed Train/Test sets and store the fitted pipeline ins
 - These operations learn statistical parameters from training data only, preventing data leakage and support reproducing for future uses.
 - Since our main goal is to find out which feature contributing to a successful Anime Released, post-released features like `Rank`, `Members`, `Popularity`,`Favorites` and `Scored by` will be removed to **prevent casual data leakage** when predicting `Score` of an Anime.
 
-### **C. **Custom Transformers: Domain-specific handling**
+--- 
+
+### **C. Custom Transformers: Domain-specific handling**
 This project integrates several **custom-built sklearn-compatible** transformers, designed specifically for messy anime metadata.
 Each transformer is implemented using `BaseEstimator` and `TransformerMixin`, ensuring full compatibility with Pipeline and ColumnTransformer.
 --- 
 
-   **C.1. MultiListModeImputer**: 
+   **C.1. Class MultiListModeImputer**: 
    - **Purpose**: Imputing multi-label columns (Genres, Studios, Producers)
    - **Strategy**: 
       - Aggregate all items and find the mode (most frequent label) based on **Train set**
@@ -335,7 +345,7 @@ Each transformer is implemented using `BaseEstimator` and `TransformerMixin`, en
 
 ---
 
-   **C.2. FrequencyGrouper**: 
+   **C.2. Class FrequencyGrouper**: 
    - **Purpose**:  
       - Reduce high-cardinality categories before appling One-Hot-Encoder on (Genres, Studios, Producers)
       - Result: From **1,287 features** after OHE -> **231 features**
@@ -346,7 +356,7 @@ Each transformer is implemented using `BaseEstimator` and `TransformerMixin`, en
 
 ---
 
-   **C.3. MultiLabelBinarizerDF Multi-Hot Encoding**: 
+   **C.3. Class MultiLabelBinarizerDF** (Multi-Hot Encoding): 
 
    - **Purpose**:  
       - Transform list-like columns (Genres, Studios, Producers) into multi-hot encoded columns 
@@ -365,9 +375,7 @@ Each transformer is implemented using `BaseEstimator` and `TransformerMixin`, en
       - Help model learn seasonality/ monthly patterns better
 
    - **Strategy**: 
-      - Compute frequency of each label in Train split only
-      - Keep labels with frequency ≥ `min_freq[col]`
-      - Replace all rare labels with "Other"
+      - Convert month numerics into sin/cos format: sin(2π * month / 12), cos(2π * month / 12)
       
 --- 
 
@@ -376,14 +384,16 @@ Each transformer is implemented using `BaseEstimator` and `TransformerMixin`, en
       - Add domain–relevant features that models cannot automatically create.
 
    - **Strategy**: 
-      - Convert month numerics into sin/cos format: sin(2π * month / 12), cos(2π * month / 12)
+      - Interaction terms:  `Episodes_x_Duration Minutes` help capturing combined effects on Score
+      - Quantile-based categorization using `pd.cut()`: Created `DurationCat` and `EpisodesCat` features to capture non-linear relationships specific to anime formats and type (Movie is has only 1 episode and usually very long) 
+
       
 --- 
 
-### **D. **sklearn Library: Functions, Classes, and Rationale**
+### **D. Sklearn Library: Functions, Classes, and Rationale**
 --- 
 
-   **D.1.  Power Transformation - learns lambda parameter from train only**: 
+   **D.1.  Power Transformation - learns lambda parameter from Train only**: 
    - **Purpose**:  
       - Normalize highly skewed numeric columns
       - Suitable for Lineae Model
@@ -393,7 +403,7 @@ Each transformer is implemented using `BaseEstimator` and `TransformerMixin`, en
       
 --- 
 
-   **D.2. SimpleImputer (median, mode) - learns values from train only**: 
+   **D.2. SimpleImputer (median, mode) - learns values from Train only**: 
    - **Strategy**:  
       - Median → for numeric columns
       - Most Frequent (mode) → for categorical columns
@@ -403,7 +413,7 @@ Each transformer is implemented using `BaseEstimator` and `TransformerMixin`, en
 
 --- 
 
-   **D.3. Scaling (RobustScaler) - learns quantiles from train only**: 
+   **D.3. Scaling (RobustScaler) - learns quantiles from Train only**: 
    - **Strategy**:  
       - Uses median and IQR, not mean & std. 
 
@@ -413,7 +423,7 @@ Each transformer is implemented using `BaseEstimator` and `TransformerMixin`, en
 
 --- 
 
-   **D.4. Encoding (OneHot, MultiHot) - learns categories from train only**: 
+   **D.4. Encoding (OneHot, MultiHot) - learns categories from Train only**: 
    - **Strategy**:  
       - handle_unknown="ignore" prevents crash on unseen categories
       - Learns category vocabulary from train only
@@ -476,12 +486,15 @@ Full Pipeline
 ### **📈 PHASE 3 — Comparative Analysis ("Before vs After")**
 
 ### **1. Overview**
-**Notebook:** `03_Comparative_Analysis.ipynb`  
-**Goal**: Visualize how clean data changes the narrative and support the keys to a successful anime
-**Workflow**: This phase has 3 main Action
----
 
-1. Act 1 - THE SITUATION:
+**Notebook:** `03_Comparative_Analysis.ipynb`  
+
+**Goal**: Visualize how clean data changes the narrative and support the keys to a successful anime
+
+**Workflow**: This phase has 3 main Action
+
+
+1. ACT 1 - THE SITUATION:
    - **Role**: Producer seeking the success formula for the next Anime project
    - **Goal**: Identify factors with strongest impact on Score
    - **The Conflict**: Raw data (df_raw) is chaotic, unusable for decision-making
@@ -491,10 +504,13 @@ Full Pipeline
 2. ACT 2 - THE COMPLICATION & DISCOVERY
 - Each Theme will have 4 main steps: Issues Overview -> Solutions -> Visual Evidence (Raw vs Cleaned) -> Deeper Visual Analysis for Business Recommendation
 - The 4 main Theme Feature:  
-      + Theme A: Target Variable (Score)
-      + Theme B: Market Factors (Type, Source)
-      + Theme C: Creative Factors (Genres, Producers, Studios)
-      + Theme D: Release Strategy (Aired, Episodes, Duration)
+      - Theme A: Target Variable (Score)
+
+      - Theme B: Market Factors (Type, Source)
+      
+      - Theme C: Creative Factors (Genres, Producers, Studios)
+      
+      - Theme D: Release Strategy (Aired, Episodes, Duration)
 
 ---
 
@@ -510,12 +526,16 @@ Full Pipeline
 ---
 
 #### **Act 1: The Foundation: Target Variable Analysis (Score)**
-   - Issue Overview: 37% missing scores, stored as text, distribution skewed by placeholder values
-   - Solution: Remove missing, convert to numeric, validate logical consistency
-   - Visual Evidence:
+   - **Issue Overview**: 37% missing scores, stored as text, distribution skewed by placeholder values
+
+   - **Solution**: Remove missing, convert to numeric, validate logical consistency
+   
+   - **Visual Evidence**:
       - Raw: Bimodal distribution with artificial "0" peak
       - Clean: Normal distribution centered at 6.39, revealing true quality spectrum
-   - Conclusion: 
+   
+   - **Conclusion**: 
+      - *The actual `Score` distribution is bell-shape -> no need for transformation
       - *True high-scoring animes (Score >8.5) are rare, not artificially common*
 
 ---
@@ -523,33 +543,42 @@ Full Pipeline
 #### **Act 2: The Complications & Discovery**
 
 **A. Theme A: Market Factors (Type, Source)**
-   - Issue Overview: Type misclassification (Movie with >1 episode), Source fragmentation (16 micro-categories), Unknown value
-   - Solution: Reclassification logic, macro-categorization (5 groups)
-   - Visual Evidence:
+   - **Issue Overview**: Type misclassification (Movie with >1 episode), Source fragmentation (16 micro-categories), Unknown value
+
+   - **Solution**: Reclassification logic, macro-categorization (5 groups)
+
+   - **Visual Evidence**:
       - Raw: Misleading "OVA" dominance due to misclassified Movies
       - Clean: True distribution: OVA (6,062) > TV (5,511) > Special (3,673)
-   - Business Insight: 
+
+   - **Business Insight**: 
       - *TV series and Monvies have highest average Score (7.1)*
       - *Producers should prioritize source from **Manga or Literary properties** for maximizing Score*
 
 
 **B. Theme B: Creative & Production Factors (Genres, Producers, Studios)**
-   - Issue Overview: Multi-label fragmentation, high cardinality, inconsistent naming, Unknow value
-   - Solution: Frequency grouping, name normalization
-   - Visual Evidence:
+   - **Issue Overview**: Multi-label fragmentation, high cardinality, inconsistent naming, Unknow value
+
+   - **Solution**: Frequency grouping, name normalization
+
+   - **Visual Evidence**:
       - Raw: "Sunrise Inc.", "Sunrise", "Sunrise Studios" treated as separate
       - Clean: Consolidated to single entity, revealing true market share
-   - Business Insight: 
+
+   - **Business Insight**: 
       - *Which Genres do top Studios consistently excel in, helping Producer decide on hiring Studio decision (example: White Fox Studio did best on Romance and Mystery)*
 
 
 **C. Theme C: Release Strategy (Aired, Episodes, Duration)**
-   - Issue Overview: Numeric, Datetime feature treated as text, fragmentation, high cardinality, inconsistent format, Unknow value
-   - Solution: Convert to numeric, datetime type; Normalize format, Grouping into meaningful Episodes, Duration ranges and seasons
-   - Visual Evidence:
+   - **Issue Overview**: Numeric, Datetime feature treated as text, fragmentation, high cardinality, inconsistent format, Unknow value
+
+   - **Solution**: Convert to numeric, datetime type; Normalize format, Grouping into meaningful Episodes, Duration ranges and seasons
+
+   - **Visual Evidence**:
       - Raw: Random monthly distribution, inconsistent format "3 min", "3 min per ep"
       - Clean: ordered monthly distribution, meaningful groups of episodes and duration ranges
-   - Business Insight: 
+
+   - **Business Insight**: 
       -  *12-13 episode format with over 60 minute runtime maximizes both Score and engagement*
       -  *Apr, Jul, Oct are the hot-month for releasing new anime*
 
@@ -559,7 +588,9 @@ Full Pipeline
 
 ### **1. Overview**
 **Notebook:** `04_Modeling_Comparison.ipynb`  
+
 **Goal**: Quantify the impact of data preparation via ML performance
+
 **Methodology**:
 1. **Baseline Model**: Linear Regression on minimally processed raw data
 2. **Final Model**: Same algorithm on fully prepared data
@@ -567,17 +598,16 @@ Full Pipeline
 
 ---
 
-**Results**:
+### **2. Metrics Results**:
 | Metric | Baseline (Raw Data) | Final (Prepared Data) | Improvement |
 |--------|-------------------|---------------------|-------------|
-| **R² Score** | 0.0887 | 0.5317 | **+443%** |
-| **MAE** | 0.6386 | 0.4853 | **-24%** |
+| **R² Score** | 0.09 | 0.53 | **+443%** |
+| **MAE** | 0.64 | 0.48 | **-24%** |
 
-**Key Finding**: Data preparation improved explanatory power by nearly 5x and reduced prediction error significantly.
 
 ---
 
-**Feature Importance Shift**:
+### **3. Feature Importance Shift**:
 - **Baseline**: Weak signals from Status, Rating, Source
 - **Final**: Strong signals from Producers, Studios, Genres (properly encoded)
 - **Insight**: Preparation unlocks the true predictive power of categorical features
@@ -624,7 +654,7 @@ Execute notebooks in sequential order:
 
 ### **Step 4 — Generate All Visualizations**
 
-All charts are automatically saved to the plots/ directory when running notebooks 03 and 04.
+All charts are automatically saved to the `plots/` directory when running notebooks 03 and 04.
 
 ### **Step 5 — Reading the Final Report**
 After running all notebooks, the final synthesized report is available as a PDF in the `report/Final_Report_Group1.pdf` directory
@@ -641,7 +671,7 @@ After running all notebooks, the final synthesized report is available as a PDF 
 ### **7.2. Storytelling Principles Applied**
 - **Contrast**: Clear before/after comparisons
 - **Focus**: Highlight most impactful transformations
-- **Narrative Flow**: Problem → Solution → Visual Evidence → Recommendation
+- **Narrative Flow**: Problem → Solution → Visual Evidence → Business Recommendation
 - **Audience Alignment**: Technical proof + business relevance
 
 ### **7.3. Strategic Recommendations for Anime Industry**
