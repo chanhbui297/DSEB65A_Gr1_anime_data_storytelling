@@ -6,10 +6,10 @@
 3. **Storytelling Context**: Business narrative & core message  
 4. **Repository Structure**: Folder organization  
 5. **Workflow (4-Phase Pipeline)**: Detailed phase-by-phase breakdown  
-      Phase 1. Explore raw data problems: `jupyter notebook notebooks/01_Diagnostic_EDA.ipynb`
-      Phase 2. Run data preparation: `jupyter notebook notebooks/02_Data_Preprocessing.ipynb`
-      Phase 3. Compare visual narratives (Before and After Data Preparation): `jupyter notebook notebooks/03_Comparative_Analysis.ipynb`
-      Phase 4. Validate with modeling: `jupyter notebook notebooks/04_Modeling_Comparison.ipynb`
+      - **Phase 1**. Explore raw data problems: `jupyter notebook notebooks/01_Diagnostic_EDA.ipynb`
+      - **Phase 2**. Run data preparation: `jupyter notebook notebooks/02_Data_Preprocessing.ipynb`
+      - **Phase 3**. Compare visual narratives (Before and After Data Preparation): `jupyter notebook notebooks/03_Comparative_Analysis.ipynb`
+      - **Phase 4**. Validate with modeling: `jupyter notebook notebooks/04_Modeling_Comparison.ipynb`
  
 6. **How to Run the Project**: Step-by-step execution guide  
 7. **Key Findings & Conclusions**: Main insights & recommendations  
