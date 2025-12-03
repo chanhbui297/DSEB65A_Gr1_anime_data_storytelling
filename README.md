@@ -334,7 +334,7 @@ Produce final, fully processed Train/Test sets and store the fitted pipeline ins
 
 ### **C. Custom Transformers: Domain-specific handling**
 
-This project integrates several **custom-built sklearn-compatible** transformers, designed specifically for messy anime metadata. Each transformer is implemented using **`BaseEstimator`** and **`TransformerMixin`**, ensuring full compatibility with Pipeline and ColumnTransformer.
+This project integrates several **custom-built sklearn-compatible** transformers, designed specifically for messy anime metadata. Each transformer is then implemented using `BaseEstimator`** and `TransformerMixin`.
 --- 
 
    **C.1. Class MultiListModeImputer**: 
