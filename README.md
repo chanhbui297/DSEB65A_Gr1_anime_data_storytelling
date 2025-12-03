@@ -167,9 +167,10 @@ anime-data-storytelling/
 │ └── 04_Modeling_Comparison.ipynb            # Phase 4: Model validation
 │
 ├── plots/                               # Generated visualizations
-│ ├── 03_plots/                               # Exploratory charts
-│ ├── 04_plots/                               # Clean data insights
-│ └── ML_Models/                              # Model comparison charts
+│ ├── Plot_01/                               # Diagnostic charts
+│ ├── Plot_03/                               # Exploratory charts
+│ ├── Plot_04/                               # Clean data insights
+│ └── Plot_ML_Models/                              # Model comparison charts
 │
 └── report/                               # Final Report
 └── Final_Report_Group1.pdf                             
@@ -271,7 +272,8 @@ Applying them post-split would produce inconsistent schemas between train/test.
 - **Strategy**: The values `0` in `Rank` and `Popularity` don't represent a true zero value but rather a missing or unassigned one. These should be converted to `np.nan`.
 
 **Step 3. Standardize Formating in (Aired, Duration)**  
-- **Strategy**: 
+- **Strategy**:
+   - Handling Aired format like '2005', '2010 to ?', 'Oct 20, 1999 to ?'
    - Extracting `Aired Month`, `Aired Year`, `Aired Date Start`, `Aired Date End` from `Aired` column
    - Convert string Duration (`24 min`) into single numeric value (`24.0`) 
 
@@ -429,7 +431,7 @@ Produce final, fully processed Train/Test sets and store the fitted pipeline ins
 
    - **Reasons**: 
       - **One-Hot Encoding**: Handle categorical features like Rating, DurationCat, EpisodesCat.
-      - **Multi-Hot Encoding**: sklearn’s OHE cannot handle list-of-labels
+      - **Multi-Hot Encoding**: sklearn’s OHE cannot handle list-of-labels like Genre, Producers, Studios
        
 --- 
 
