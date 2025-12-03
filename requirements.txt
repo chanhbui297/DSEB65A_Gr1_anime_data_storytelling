@@ -1,0 +1,12 @@
+numpy==2.3.2
+pandas==2.3.2
+matplotlib==3.10.5
+plotly==6.3.1
+ipython==9.4.0
+missingno==0.5.2
+kagglehub==0.3.13
+joblib==1.5.2
+scikit-learn==1.7.2
+scipy==1.16.2
+regex==2025.11.3
+kaleido==1.2.0
