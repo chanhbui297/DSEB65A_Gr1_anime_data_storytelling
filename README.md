@@ -280,12 +280,12 @@ Applying them post-split would produce inconsistent schemas between train/test.
    - Split string value into proper list ('MAPPA, White Fox' -> ["MAPPA", "White Fox"])
    - Fixing Typo and Inconsistency using mapping: "Sunrise Inc." -> "Sunrise"
 
-**Step 4: Data Type Coercion & Logic Validation**
+**Step 5: Data Type Coercion & Logic Validation**
 - **Type conversion**: Strings like "8.75" → float 8.75
 - **Business rule fixes**: "Movie must have 1 episode" is domain knowledge, not learned from data
 - **Ghost record removal**: Records with no score AND no metadata are fundamentally unusable
 
-**Step 5: Drop Unnecessary Columns**
+**Step 6: Drop Unnecessary Columns**
 
 | **Feature Dropped** | **Reason for Dropping** |
 |---------------------|--------------------------|
@@ -333,8 +333,8 @@ Produce final, fully processed Train/Test sets and store the fitted pipeline ins
 --- 
 
 ### **C. Custom Transformers: Domain-specific handling**
-This project integrates several **custom-built sklearn-compatible** transformers, designed specifically for messy anime metadata.
-Each transformer is implemented using `BaseEstimator` and `TransformerMixin`, ensuring full compatibility with Pipeline and ColumnTransformer.
+
+This project integrates several **custom-built sklearn-compatible** transformers, designed specifically for messy anime metadata. Each transformer is implemented using **`BaseEstimator`** and **`TransformerMixin`**, ensuring full compatibility with Pipeline and ColumnTransformer.
 --- 
 
    **C.1. Class MultiListModeImputer**: 
@@ -493,6 +493,7 @@ Full Pipeline
 
 **Workflow**: This phase has 3 main Action
 
+--- 
 
 1. ACT 1 - THE SITUATION:
    - **Role**: Producer seeking the success formula for the next Anime project
@@ -542,6 +543,8 @@ Full Pipeline
 
 #### **Act 2: The Complications & Discovery**
 
+--- 
+
 **A. Theme A: Market Factors (Type, Source)**
    - **Issue Overview**: Type misclassification (Movie with >1 episode), Source fragmentation (16 micro-categories), Unknown value
 
@@ -555,6 +558,7 @@ Full Pipeline
       - *TV series and Monvies have highest average Score (7.1)*
       - *Producers should prioritize source from **Manga or Literary properties** for maximizing Score*
 
+---
 
 **B. Theme B: Creative & Production Factors (Genres, Producers, Studios)**
    - **Issue Overview**: Multi-label fragmentation, high cardinality, inconsistent naming, Unknow value
@@ -568,6 +572,7 @@ Full Pipeline
    - **Business Insight**: 
       - *Which Genres do top Studios consistently excel in, helping Producer decide on hiring Studio decision (example: White Fox Studio did best on Romance and Mystery)*
 
+---
 
 **C. Theme C: Release Strategy (Aired, Episodes, Duration)**
    - **Issue Overview**: Numeric, Datetime feature treated as text, fragmentation, high cardinality, inconsistent format, Unknow value
