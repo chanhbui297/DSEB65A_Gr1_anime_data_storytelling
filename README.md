@@ -507,10 +507,10 @@ Full Pipeline
 
 **Each Theme will have 4 main steps:**
 
-    1. Issues Overview
-    2. Solutions
-    3. Visual Evidence (Raw vs Cleaned)
-    4. Business Recommendation
+   a. Issues Overview
+   b. Solutions
+   c. Visual Evidence (Raw vs Cleaned)
+   d. Business Recommendation
 
 **The 4 main Theme Feature:** 
  
