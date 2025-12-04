@@ -38,7 +38,8 @@ Through a series of visual narratives and analytical comparisons, we highlight h
 ---
 
 ### **2.2. Why We Chose This Dataset** 
-- **Rich narrative potential**: Anime scoring involves multiple factors (creative, production, timing) - **Complex data structure**: Contains multi-label fields, inconsistent formats, and mixed data types 
+- **Rich narrative potential**: Anime scoring involves multiple factors (creative, production, timing) 
+- **Complex data structure**: Contains multi-label fields, inconsistent formats, and mixed data types 
 - **Real-world relevance**: Represents common data challenges in entertainment/media analytics 
 - **Clear before/after contrast**: Dramatic improvements possible through proper preprocessing 
 
@@ -273,17 +274,17 @@ Applying them post-split would produce inconsistent schemas between train/test.
 
 **Step 3. Standardize Formating in (Aired, Duration)**  
 - **Strategy**:
-   - Handling Aired format like '2005', '2010 to ?', 'Oct 20, 1999 to ?'
+   - Handling inconsistnt Aired format like `'2005'`, `'2010 to ?'`, `'Oct 20, 1999 to ?'`
    - Extracting `Aired Month`, `Aired Year`, `Aired Date Start`, `Aired Date End` from `Aired` column
    - Convert string Duration (`24 min`) into single numeric value (`24.0`) 
 
 **Step 4: Handle multi-lable columns (Genres, Studios, Producers)**
 - **Strategy**: 
-   - Split string value into proper list ('MAPPA, White Fox' -> ["MAPPA", "White Fox"])
-   - Fixing Typo and Inconsistency using mapping: "Sunrise Inc." -> "Sunrise"
+   - Split string value into proper list: `'MAPPA, White Fox'` into `["MAPPA", "White Fox"]`
+   - Fixing Typo and Inconsistency using mapping: `"Sunrise Inc."` -> `"Sunrise"`
 
 **Step 5: Data Type Coercion & Logic Validation**
-- **Type conversion**: Strings like "8.75" → float 8.75
+- **Type conversion**: Strings like `"8.75"` → float `8.75`
 - **Business rule fixes**: "Movie must have 1 episode" is domain knowledge, not learned from data
 - **Ghost record removal**: Records with no score AND no metadata are fundamentally unusable
 
