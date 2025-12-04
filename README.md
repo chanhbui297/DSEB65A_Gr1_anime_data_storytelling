@@ -58,7 +58,7 @@ Through a series of visual narratives and analytical comparisons, we highlight h
 - **Logical conflicts:** *7,405 records have a ranking but no score*  
 - **Type misclassification:**  
   - Movies listed with **>1 episode**  
-  - TV series with **<10 minutes duration**  
+  - Aldult Genre with Rating **PG - Children**  
 - **Mixed data types** and unstructured multi-label fields (genres, studios, producers)
 
 ---
@@ -376,7 +376,7 @@ Produce final, fully processed Train/Test sets and store the fitted pipeline ins
       - Help model learn seasonality/ monthly patterns better
 
    - **Strategy**: 
-      - Convert month numerics into sin/cos format: sin(2π * month / 12), cos(2π * month / 12)
+      - Convert month numerics into cyclical format: **sin(2π * month / 12)** and **cos(2π * month / 12)**
       
 --- 
 
@@ -400,7 +400,7 @@ Produce final, fully processed Train/Test sets and store the fitted pipeline ins
       - Suitable for Lineae Model
 
    - **Strategy**: 
-      - Using Yeo-Johnson to handles zero (Counting_feature has 0 values)
+      - Using Yeo-Johnson instead of Box-cox to handles zero (Counting_feature has 0 values)
       
 --- 
 
@@ -419,7 +419,7 @@ Produce final, fully processed Train/Test sets and store the fitted pipeline ins
       - Uses median and IQR, not mean & std. 
 
    - **Reasons**: 
-      - Dataset contains extreme outliers (e.g., 10,000+ episode counts for special cases) 
+      - Dataset contains extreme outliers (e.g., 1,000+ episode counts for special cases) 
       - Resistant to heavy-tailed distributions
 
 --- 
@@ -430,8 +430,8 @@ Produce final, fully processed Train/Test sets and store the fitted pipeline ins
       - Learns category vocabulary from train only
 
    - **Reasons**: 
-      - **One-Hot Encoding**: Handle categorical features like Rating, DurationCat, EpisodesCat.
-      - **Multi-Hot Encoding**: sklearn’s OHE cannot handle list-of-labels like Genre, Producers, Studios
+      - **One-Hot Encoding**: Handle categorical features like Rating, DurationCat and EpisodesCat.
+      - **Multi-Hot Encoding**: sklearn’s OHE cannot handle list-of-labels like Genre, Producers and Studios
        
 --- 
 
@@ -504,12 +504,16 @@ Full Pipeline
 ---
 
 2. ACT 2 - THE COMPLICATION & DISCOVERY
-- Each Theme will have 4 main steps: Issues Overview -> Solutions -> Visual Evidence (Raw vs Cleaned) -> Deeper Visual Analysis for Business Recommendation
+- Each Theme will have 4 main steps: 
+         1. Issues Overview
+         2. Solutions
+         3. Visual Evidence (Raw vs Cleaned)
+         4. Business Recommendation
+
 - The 4 main Theme Feature:  
-      - Theme A: Target Variable (Score)
-      - Theme B: Market Factors (Type, Source)
-      - Theme C: Creative Factors (Genres, Producers, Studios)
-      - Theme D: Release Strategy (Aired, Episodes, Duration)
+         1. Theme A: Market Factors (Type, Source)
+         2. Theme B: Creative Factors (Genres, Producers, Studios)
+         3. Theme C: Release Strategy (Aired, Episodes, Duration)
 
 ---
 
@@ -592,7 +596,7 @@ Full Pipeline
 ### **1. Overview**
 **Notebook:** `04_Modeling_Comparison.ipynb`  
 
-**Goal**: Quantify the impact of data preparation via ML performance
+**Goal**: Quantify the impact of data preparation via Machine Learning performance
 
 **Methodology**:
 1. **Baseline Model**: Linear Regression on minimally processed raw data
@@ -604,8 +608,8 @@ Full Pipeline
 ### **2. Metrics Results**:
 | Metric | Baseline (Raw Data) | Final (Prepared Data) | Improvement |
 |--------|-------------------|---------------------|-------------|
-| **R² Score** | 0.09 | 0.53 | **+443%** |
-| **MAE** | 0.64 | 0.48 | **-24%** |
+| **R² Score** | 0.09 | 0.53 | **+488%** |
+| **MAE** | 0.64 | 0.48 | **-25%** |
 
 
 ---
