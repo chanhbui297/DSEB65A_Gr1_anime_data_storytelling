@@ -504,13 +504,13 @@ Full Pipeline
 ---
 
 2. ACT 2 - THE COMPLICATION & DISCOVERY 
+
 **Each Theme will have 4 main steps:**
 
     1. Issues Overview
     2. Solutions
     3. Visual Evidence (Raw vs Cleaned)
     4. Business Recommendation
-
 
 **The 4 main Theme Feature:** 
  
