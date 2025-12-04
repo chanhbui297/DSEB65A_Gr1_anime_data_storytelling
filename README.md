@@ -640,8 +640,7 @@ Based on the unlocked insights, a producer can now follow a **data-driven bluepr
 
 ### **C. Takeaway — The Resolution of the Story**
 
-The cleaned dataset reveals a **highly structured and cyclical anime industry**, where release timing, studio specialization, format choice, and production scale define performance.  
-Comparative Analysis confirms that:  
+The cleaned dataset reveals a **highly structured and cyclical anime industry**, where release timing, studio specialization, format choice, and production scale define performance. Comparative Analysis confirms that:  
 **Only after cleaning can data reliably guide business decisions.**
 
 --- 
@@ -666,8 +665,8 @@ To keep the baseline model intentionally simple (and highlight the value of prop
 
 - **Missing Values**: All rows containing any `NaN` were dropped instead of imputed, reducing the dataset from **15,692 → 7,231** rows.
 - **Categorical Features**: Two lightweight approaches were tested:  
-  1. **Ordinal Encoding** for converting categories into numeric codes (Our final method for baseline model) 
-  2. **Dropping all categorical columns entirely** to avoid dimensional explosion (no One-Hot Encoding used)
+   1. **Dropping all categorical columns entirely**, ensuring Linear Model can run without error
+   2. **Ordinal Encoding** for converting categories into numeric codes (Our final method for baseline model) 
 
 These constraints create a “worst reasonable scenario,” ensuring the Baseline Model reflects the performance of raw data without meaningful cleaning.
 
