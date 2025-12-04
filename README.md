@@ -513,7 +513,7 @@ Full Pipeline
    3. Visual Evidence (Raw vs Cleaned)
    4. Business Recommendation
 
-**The 4 main Theme Feature:** 
+**The 3 main Theme Features:** 
  
    1. Theme A: Market Factors (Type, Source)
    2. Theme B: Creative Factors (Genres, Producers, Studios)  
@@ -538,7 +538,7 @@ Full Pipeline
    - **Solution**: Remove missing, convert to numeric, validate logical consistency
    
    - **Visual Evidence**:
-      - Raw: Bimodal distribution with artificial "0" peak
+      - Raw: Distorted distribution with `"UNKNOW"` peak
       - Clean: Normal distribution centered at 6.39, revealing true quality spectrum
    
    - **Conclusion**: 
@@ -593,8 +593,59 @@ Full Pipeline
       -  *12-13 episode format with over 60 minute runtime maximizes both Score and engagement*
       -  *Apr, Jul, Oct are the hot-month for releasing new anime*
 
+---
+
+### **3. ACT 3 — THE RESOLUTION: Deep Insights & Strategic Decisions**
+
+---
+
+### **A. Proof — What Clean Data Reveals (Hidden Patterns Unlocked)**
+
+From the “Before vs After” analysis, four cross-theme patterns emerge that were completely invisible in raw data:
+
+- **Format Hierarchy**  
+  TV Series & Movies consistently receive the highest scores, while OVAs/Specials hit a natural score ceiling regardless of quality.
+
+- **Source Material Advantage**  
+  Adaptations from **Manga** and **Novels** outperform **Original** concepts and **Game**-based works, confirming the value of pre-validated stories.
+
+- **Studio–Genre Fit**  
+  High performance comes from specialization.  
+  *Studios excel only in specific genres* (e.g., MAPPA → Suspense, Kyoto Animation → Drama/Romance).
+
+- **Scale Correlation**  
+  Larger production committees (6+ producers) and longer runtimes (>60 min) strongly correlate with higher scores.
+
+---
+
+### **B. Strategic Recommendations for the Producer**
+
+Based on the unlocked insights, a producer can now follow a **data-driven blueprint** for maximizing success probability:
+
+- **1. Low-Risk Production Strategy**  
+  Choose **TV Series** or **Feature Films** adapted from strong **Manga/Novel IPs** and secure a large committee (6+ members) to stabilize funding and production quality.
+
+- **2. Genre & Studio Alignment**  
+  Avoid overcrowded genres (Action/Comedy).  
+  Invest in high-yield genres like **Mystery** and **Suspense**, and pair them with *specialized* studios (e.g., White Fox for Thriller/Mystery).
+
+- **3. Premium Format Design**  
+  Develop **Mini-Series (6–12 episodes)** with **Movie-Length duration (60–180 mins)** — the top-performing configuration (Avg Score: **8.21**).
+
+- **4. Release Timing Optimization**  
+  Schedule major releases for **Fall (October)** or **Winter (January)**.  
+  Avoid **Summer**, which historically correlates with lower average scores.
+
+---
+
+### **C. Takeaway — The Resolution of the Story**
+
+The cleaned dataset reveals a **highly structured and cyclical anime industry**, where release timing, studio specialization, format choice, and production scale define performance.  
+Comparative Analysis confirms that:  
+**Only after cleaning can data reliably guide business decisions.**
 
 --- 
+
 ### **⚖️ PHASE 4 — Modeling Comparison ("The Validator")**
 
 ### **1. Overview**
@@ -609,16 +660,28 @@ Full Pipeline
 
 ---
 
-### **2. Metrics Results**:
+### **2. Baseline Data Handling**
+
+To keep the baseline model intentionally simple (and highlight the value of proper data preparation), the raw dataset was only minimally processed:
+
+- **Missing Values**: All rows containing any `NaN` were dropped instead of imputed, reducing the dataset from **15,692 → 7,231** rows.
+- **Categorical Features**: Two lightweight approaches were tested:  
+  1. **Ordinal Encoding** for converting categories into numeric codes (Our final method for baseline model) 
+  2. **Dropping all categorical columns entirely** to avoid dimensional explosion (no One-Hot Encoding used)
+
+These constraints create a “worst reasonable scenario,” ensuring the Baseline Model reflects the performance of raw data without meaningful cleaning.
+
+---
+
+### **3. Metrics Results**:
 | Metric | Baseline (Raw Data) | Final (Prepared Data) | Improvement |
 |--------|-------------------|---------------------|-------------|
 | **R² Score** | 0.09 | 0.53 | **+488%** |
 | **MAE** | 0.64 | 0.48 | **-25%** |
 
-
 ---
 
-### **3. Feature Importance Shift**:
+### **4. Feature Importance Shift**:
 - **Baseline**: Weak signals from Status, Rating, Source
 - **Final**: Strong signals from Producers, Studios, Genres (properly encoded)
 - **Insight**: Preparation unlocks the true predictive power of categorical features
@@ -686,11 +749,24 @@ After running all notebooks, the final synthesized report is available as a PDF 
 - **Audience Alignment**: Technical proof + business relevance
 
 ### **7.3. Strategic Recommendations for Anime Industry**
-Based on cleaned data analysis:
-1. **Production Strategy**: Focus on 12-13 episode formats with established studios
-2. **Release Timing**: Target seasonal windows (January, April, July, October)
-3. **Creative Mix**: Combine popular genres (Action × Fantasy, Comedy × Slice-of-life)
-4. **Quality Signals**: Partner with top producers and studios as quality proxies
+
+Based on insights revealed after full data cleaning and comparative analysis:
+
+1. **Production Strategy**  
+   Prioritize **TV Series or Feature Films** adapted from strong **Manga/Novel IPs**, supported by larger production committees (6+ members) to ensure quality stability.
+
+2. **Release Timing Optimization**  
+   Schedule key launches in **January, April, July, or October**, with strongest performance observed in **Fall (October)** and **Winter (January)**.
+
+3. **Creative & Studio Alignment**  
+   Move beyond saturated genres; invest in high-yield genres such as **Mystery** and **Suspense**, pairing them with specialized studios (e.g., White Fox, MAPPA, Kyoto Animation).
+
+4. **Premium Format Opportunity**  
+   Consider **Mini-Series (6–12 episodes)** with **Movie-length runtime (60–180 minutes)** — the highest-performing configuration in the dataset.
+
+5. **Quality Signals**  
+   Treat top studios, reputable producers, and longer runtimes as strong predictors of higher scores, using them as data-backed quality proxies.
+
 
 ---
 
