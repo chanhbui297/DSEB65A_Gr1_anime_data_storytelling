@@ -514,9 +514,9 @@ Full Pipeline
 
 **The 4 main Theme Feature:** 
  
-    1. Theme A: Market Factors (Type, Source)
-    2. Theme B: Creative Factors (Genres, Producers, Studios)  
-    3. Theme C: Release Strategy (Aired, Episodes, Duration)
+   1. Theme A: Market Factors (Type, Source)
+   2. Theme B: Creative Factors (Genres, Producers, Studios)  
+   3. Theme C: Release Strategy (Aired, Episodes, Duration)
 
 ---
 
