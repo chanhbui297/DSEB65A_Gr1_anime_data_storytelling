@@ -171,7 +171,7 @@ anime-data-storytelling/
 │ ├── Plot_01/                               # Diagnostic charts
 │ ├── Plot_03/                               # Exploratory charts
 │ ├── Plot_04/                               # Clean data insights
-│ └── Plot_ML_Models/                              # Model comparison charts
+│ └── Plot_ML_Models/                        # Model comparison charts
 │
 └── report/                               # Final Report
 └── Final_Report_Group1.pdf                             
@@ -266,8 +266,8 @@ Applying them post-split would produce inconsistent schemas between train/test.
 ### **C. Main Steps (Structural Cleaning)**
 
 **Step 1.  Standardize "NaN-like" Values**  
-- **Strategy**: Many object columns use string literals to represent missing data. We'll replace them with np.NaN
-- **Example**: ['unknown', 'not available', 'n/a', 'na', 'tbd', 'tba', '---'] -> NaN
+- **Strategy**: Many object columns use string literals to represent missing data. We'll replace them with `np.nan`
+- **Example**: ['unknown', 'not available', 'n/a', 'na', 'tbd', 'tba', '---'] -> `np.nan`
 
 **Step 2. Handle Placeholder Zeros**  
 - **Strategy**: The values `0` in `Rank` and `Popularity` don't represent a true zero value but rather a missing or unassigned one. These should be converted to `np.nan`.
