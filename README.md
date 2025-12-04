@@ -505,15 +505,16 @@ Full Pipeline
 
 2. ACT 2 - THE COMPLICATION & DISCOVERY 
 - Each Theme will have 4 main steps:
-
-    1. Issues Overview
-    2. Solutions
-    3. Visual Evidence (Raw vs Cleaned)
-    4. Business Recommendation
+    <ol>
+        <li>Issues Overview</li>
+        <li>Solutions</li>
+        <li>Visual Evidence (Raw vs Cleaned)</li>
+        <li>Business Recommendation</li>
+    </ol>
 
 
 - The 4 main Theme Feature: 
- 
+
     1. Theme A: Market Factors (Type, Source)
     2. Theme B: Creative Factors (Genres, Producers, Studios)  
     3. Theme C: Release Strategy (Aired, Episodes, Duration)
