@@ -532,7 +532,7 @@ Full Pipeline
 
 ---
 
-#### **Act 1: The Foundation: Target Variable Analysis (Score)**
+### **Act 1: The Foundation: Target Variable Analysis (Score)**
    - **Issue Overview**: 37% missing scores, stored as text, distribution skewed by placeholder values
 
    - **Solution**: Remove missing, convert to numeric, validate logical consistency
@@ -547,7 +547,7 @@ Full Pipeline
 
 ---
 
-#### **Act 2: The Complications & Discovery**
+### **Act 2: The Complications & Discovery**
 
 --- 
 
@@ -595,7 +595,7 @@ Full Pipeline
 
 ---
 
-### **3. ACT 3 — THE RESOLUTION: Deep Insights & Strategic Decisions**
+### **ACT 3 — THE RESOLUTION: Deep Insights & Strategic Decisions**
 
 ---
 
