@@ -547,7 +547,7 @@ Full Pipeline
 ### **Act 1: Context - Obstacles to Finding a Successful Anime Formula**
 
 --- 
-**A. Key Conflicts: Target Variable Analysis (Score)**
+### **A. Key Conflicts: Target Variable Analysis (Score)**
 
 **A.1. Critical Information Blind Spots**
 
@@ -584,7 +584,7 @@ Even when data exists, it is **statistically misleading**.
 
 ---
 
-**B. Conclusion - Raw data creates illusions**
+### **B. Conclusion - Raw data creates illusions**
 - Raw data gives the *illusion* of completeness, but essential information is fundamentally absent.
 - Structural entropy blurs category boundaries and corrupts every downstream analysis.
 - Signal distortions create false patterns, hiding the true behavior of the anime market.
@@ -595,7 +595,7 @@ Even when data exists, it is **statistically misleading**.
 
 --- 
 
-**A. The Foundation: Target Variable Analysis (Score)**
+### **A. The Foundation: Target Variable Analysis (Score)**
    - **Issue Overview**: 37% missing, text-based values, distorted distribution 
 
    - **Solution**: Standardize and remove missing values, convert to numeric
@@ -609,7 +609,7 @@ Even when data exists, it is **statistically misleading**.
 
 --- 
 
-**B. Theme A: Market Factors (Type, Source)**
+### **B. Theme A: Market Factors (Type, Source)**
    - **Issue Overview**: Type misclassification (Movie with >1 episode), Source fragmentation (16 micro-categories), Unknown value
 
    - **Solution**: Reclassification logic, macro-categorization (5 groups)
@@ -624,7 +624,7 @@ Even when data exists, it is **statistically misleading**.
 
 ---
 
-**C. Theme B: Creative & Production Factors (Genres, Producers, Studios)**
+### **C. Theme B: Creative & Production Factors (Genres, Producers, Studios)**
    - **Issue Overview**: Multi-label fragmentation, high cardinality, inconsistent naming, Unknow value
 
    - **Solution**: Frequency grouping, name normalization
@@ -638,7 +638,7 @@ Even when data exists, it is **statistically misleading**.
 
 ---
 
-**D. Theme C: Release Strategy (Aired, Episodes, Duration)**
+### **D. Theme C: Release Strategy (Aired, Episodes, Duration)**
    - **Issue Overview**: Numeric, Datetime feature treated as text, fragmentation, high cardinality, inconsistent format, Unknow value
 
    - **Solution**: Convert to numeric, datetime type; Normalize format, Grouping into meaningful Episodes, Duration ranges and seasons
