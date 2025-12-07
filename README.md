@@ -1,5 +1,16 @@
 # 📘 The Power of Data Preparation through Data Storytelling
 ---
+## 📋  Group Distribution 
+
+| STT | ID        | Full Name          | % Contribution |
+|-----|-----------|--------------------|----------------|
+| 01  | 11230508  | Bùi Châu Anh       | 17.2%          |
+| 06  | 11230522  | Thành Uyển Dung    | 16.63%         |
+| 09  | 11230529  | Vũ Tuấn Đạt        | 16.3%          |
+| 16  | 11230544  | Đặng Nhật Huy      | 16.6%          |
+| 33  | 11230584  | Chu Bích Phương    | 16.63%         |
+| 37  | 11230592  | Phạm Vân Thư       | 16.63%         |
+
 ## 📋 README Structure
 1. **Project Overview**: Short description & project structure  
 2. **Dataset Description**: Source, size, features, raw vs. cleaned state, reason for choosing  
