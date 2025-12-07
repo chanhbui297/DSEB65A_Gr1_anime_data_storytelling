@@ -515,7 +515,7 @@ Full Pipeline
 
 ---
 
-#### **2. ACT 2 - THE REVELATION (True Insight)**
+#### **2. ACT 2 - THE REVELATION (The True Insight)**
 
 **Each Theme will have 4 main steps:**
 
@@ -591,7 +591,7 @@ Even when data exists, it is **statistically misleading**.
 
 ---
 
-### **Act 2: The Complications & Discovery**
+### **Act 2: THE REVELATION (The True Insight)**
 
 --- 
 
