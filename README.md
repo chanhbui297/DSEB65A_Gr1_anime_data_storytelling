@@ -547,7 +547,7 @@ Full Pipeline
 ### **Act 1: Context - Obstacles to Finding a Successful Anime Formula**
 
 --- 
-### **A. Key Conflicts: Target Variable Analysis (Score)**
+### **A. Key Conflicts**
 
 **A.1. Critical Information Blind Spots**
 
