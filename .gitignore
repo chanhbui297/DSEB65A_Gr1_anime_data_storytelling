@@ -1,8 +1,23 @@
-# System
+# --- System & OS  ---
 __pycache__/
-.ipynb_checkpoints/
+*.py[cod]
 .DS_Store
+Thumbs.db
+Desktop.ini
 
-# Env
+# --- IDE / Editors  ---
+.vscode/
+.idea/
+*.swp
+
+# --- Environments  ---
 .env
 venv/
+env/
+.venv/
+
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+# --- Logs & Temp ---
+*.log
