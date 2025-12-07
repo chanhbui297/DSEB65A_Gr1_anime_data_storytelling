@@ -508,15 +508,14 @@ Full Pipeline
 
 --- 
 
-## **ACT 1 — THE CONTEXT**
+#### **ACT 1 — THE CONTEXT**
    - **Role**: Producer seeking the **success formula** for the **next Anime project**
    - **Goal**: Understand why the raw dataset cannot support reliable decisions  
    - **The Conflict**:  **Raw data** is chaotic — missingness, fragmentation, inconsistent formats — **creating “illusions”** that distort analysis.
 
-This Act establishes *why data preparation is necessary for Anime analysis* before any insight can be trusted.
 ---
 
-## **2. ACT 2 - THE REVELATION (True Insight)**
+#### **2. ACT 2 - THE REVELATION (True Insight)**
 
 **Each Theme will have 4 main steps:**
 
@@ -534,10 +533,10 @@ This Act establishes *why data preparation is necessary for Anime analysis* befo
 
 ---
 
-## **3. ACT 3: THE RESOLUTION**
-      - Proof: Model performance comparison 
-      - Strategic Recommendation for Producer
-      - Takeaway: "Success is engineered through data-informed decisions"
+#### **3. ACT 3: THE RESOLUTION**
+   - Proof: Model performance comparison 
+   - Strategic Recommendation for Producer
+   - Takeaway: "Success is engineered through data-informed decisions"
 
 ---
 
@@ -545,32 +544,24 @@ This Act establishes *why data preparation is necessary for Anime analysis* befo
 
 ---
 
-### **Act 1: Context - Obstacles to Finding a Successful Anime Formula **
+### **Act 1: Context - Obstacles to Finding a Successful Anime Formula**
 
 --- 
 **A. Key Conflicts: Target Variable Analysis (Score)**
 
 **A.1. Critical Information Blind Spots**
-Large portions of the dataset *pretend to exist* but contain no usable information.  
-Thousands of entries return placeholders such as **"Unknown"**, **"No description available"**, **"not available"**, or broken image links.  
 
-These hidden-missing values mask the true level of missingness:
-- 37% missing Scores  
-- 81% missing Licensors  
-- 78% missing Premiered  
-- 7,405 titles have a *Rank* but no *Score*  
-- 1,330 “ghost titles” with **zero engagement** and no metadata  
+Large portions of the dataset *pretend to exist* but contain no usable information: instead of NaN or meaningful values, row are filled with **"Unknown"**, **"No description available"**, **"not available"**, or broken image links. 
 
 ---
 
 **A.2. Structural Entropy**
+
 The dataset suffers from severe structural inconsistency, making it impossible to analyze without correction.
 
 - **Inconsistent Formats**  
-  - 20+ date formats:  
-    *"Oct 20, 1999 to ?"*, *"1-Sep-01"*, *"????"*  
-  - Durations recorded as:  
-    *"3 min"*, *"3 min per ep"*, *"1 hr. 50 min"*  
+  - 20+ date formats:  "Oct 20, 1999 to ?"*, *"1-Sep-01"*
+  - Durations recorded as:  "3 min"*, *"3 min per ep"*, *"1 hr. 50 min"
   - Numeric fields stored as strings (Score, Rank, Favorites, Episodes)
 
 - **Multi-label Fields**  
@@ -583,6 +574,7 @@ The dataset suffers from severe structural inconsistency, making it impossible t
 ---
 
 **A.3. Signal Distortion**
+
 Even when data exists, it is **statistically misleading**.
 
 - **Right-skewed engagement metrics** (Members, Favorites) with extreme 99th percentile outliers  
