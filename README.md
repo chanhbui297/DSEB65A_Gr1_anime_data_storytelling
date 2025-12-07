@@ -1,6 +1,6 @@
 # 📘 The Power of Data Preparation through Data Storytelling
 ---
-## 📋  Group Distribution 
+## 📋  Group Distribution
 
 | STT | ID        | Full Name          | % Contribution |
 |-----|-----------|--------------------|----------------|
@@ -504,35 +504,37 @@ Full Pipeline
 
 **Goal**: Visualize how clean data changes the narrative and support the keys to a successful anime
 
-**Workflow**: This phase has 3 main Action
+**Workflow**: This phase contains **3 main Acts**
 
 --- 
 
-1. ACT 1 - THE SITUATION:
-   - **Role**: Producer seeking the success formula for the next Anime project
-   - **Goal**: Identify factors with strongest impact on Score
-   - **The Conflict**: Raw data (df_raw) is chaotic, unusable for decision-making
+## **ACT 1 — THE CONTEXT**
+   - **Role**: Producer seeking the **success formula** for the **next Anime project**
+   - **Goal**: Understand why the raw dataset cannot support reliable decisions  
+   - **The Conflict**:  **Raw data** is chaotic — missingness, fragmentation, inconsistent formats — **creating “illusions”** that distort analysis.
 
+This Act establishes *why data preparation is necessary for Anime analysis* before any insight can be trusted.
 ---
 
-2. ACT 2 - THE COMPLICATION & DISCOVERY 
+## **2. ACT 2 - THE REVELATION (True Insight)**
 
 **Each Theme will have 4 main steps:**
 
    1. Issues Overview
    2. Solutions
    3. Visual Evidence (Raw vs Cleaned)
-   4. Business Recommendation
+   4. Business Insights
 
 **The 3 main Theme Features:** 
  
-   1. Theme A: Market Factors (Type, Source)
-   2. Theme B: Creative Factors (Genres, Producers, Studios)  
-   3. Theme C: Release Strategy (Aired, Episodes, Duration)
+   1. The Foundation: Target Variable (Score)
+   2. Theme A: Market Factors (Type, Source)
+   3. Theme B: Creative Factors (Genres, Producers, Studios)  
+   4. Theme C: Release Strategy (Aired, Episodes, Duration)
 
 ---
 
-3. ACT 3: THE RESOLUTION
+## **3. ACT 3: THE RESOLUTION**
       - Proof: Model performance comparison 
       - Strategic Recommendation for Producer
       - Takeaway: "Success is engineered through data-informed decisions"
@@ -543,18 +545,57 @@ Full Pipeline
 
 ---
 
-### **Act 1: The Foundation: Target Variable Analysis (Score)**
-   - **Issue Overview**: 37% missing scores, stored as text, distribution skewed by placeholder values
+### **Act 1: Context - Obstacles to Finding a Successful Anime Formula **
 
-   - **Solution**: Remove missing, convert to numeric, validate logical consistency
-   
-   - **Visual Evidence**:
-      - Raw: Distorted distribution with `"UNKNOW"` peak
-      - Clean: Normal distribution centered at 6.39, revealing true quality spectrum
-   
-   - **Conclusion**: 
-      - *The actual `Score` distribution is bell-shape -> no need for transformation*
-      - *True high-scoring animes (Score >8.5) are rare, not artificially common*
+--- 
+**A. Key Conflicts: Target Variable Analysis (Score)**
+
+**A.1. Critical Information Blind Spots**
+Large portions of the dataset *pretend to exist* but contain no usable information.  
+Thousands of entries return placeholders such as **"Unknown"**, **"No description available"**, **"not available"**, or broken image links.  
+
+These hidden-missing values mask the true level of missingness:
+- 37% missing Scores  
+- 81% missing Licensors  
+- 78% missing Premiered  
+- 7,405 titles have a *Rank* but no *Score*  
+- 1,330 “ghost titles” with **zero engagement** and no metadata  
+
+---
+
+**A.2. Structural Entropy**
+The dataset suffers from severe structural inconsistency, making it impossible to analyze without correction.
+
+- **Inconsistent Formats**  
+  - 20+ date formats:  
+    *"Oct 20, 1999 to ?"*, *"1-Sep-01"*, *"????"*  
+  - Durations recorded as:  
+    *"3 min"*, *"3 min per ep"*, *"1 hr. 50 min"*  
+  - Numeric fields stored as strings (Score, Rank, Favorites, Episodes)
+
+- **Multi-label Fields**  
+  Genres, Studios, Producers stored as lists of strings (e.g., 'Action,Sci-Fi'), making them unusable for modeling or aggregation.
+
+- **Misclassified Metadata**  
+  - Movies with **>1 episode**  
+  - Adult genres paired with *All Ages* ratings  
+
+---
+
+**A.3. Signal Distortion**
+Even when data exists, it is **statistically misleading**.
+
+- **Right-skewed engagement metrics** (Members, Favorites) with extreme 99th percentile outliers  
+- **Ghost titles** with zero members and favorites distort rank-based insights  
+- **Duplicate names** and inconsistent aliases inflate category counts  
+- **Structural anomalies** (end date < start date, impossible runtimes) introduce noise into time-based analysis
+
+---
+
+**B. Conclusion - Raw data creates illusions**
+- Raw data gives the *illusion* of completeness, but essential information is fundamentally absent.
+- Structural entropy blurs category boundaries and corrupts every downstream analysis.
+- Signal distortions create false patterns, hiding the true behavior of the anime market.
 
 ---
 
@@ -562,7 +603,21 @@ Full Pipeline
 
 --- 
 
-**A. Theme A: Market Factors (Type, Source)**
+**A. The Foundation: Target Variable Analysis (Score)**
+   - **Issue Overview**: 37% missing, text-based values, distorted distribution 
+
+   - **Solution**: Standardize and remove missing values, convert to numeric
+
+   - **Visual Evidence**:
+      - Raw: dominated by `"UNKNOWN"`  
+      - Clean: smooth bell-shaped distribution centered at **6.39**  
+
+   - **Business Insight**: 
+      - *High scores (>9.0) and low scores (<3.5) are rare; Score is statistically healthy after cleaning*
+
+--- 
+
+**B. Theme A: Market Factors (Type, Source)**
    - **Issue Overview**: Type misclassification (Movie with >1 episode), Source fragmentation (16 micro-categories), Unknown value
 
    - **Solution**: Reclassification logic, macro-categorization (5 groups)
@@ -577,7 +632,7 @@ Full Pipeline
 
 ---
 
-**B. Theme B: Creative & Production Factors (Genres, Producers, Studios)**
+**C. Theme B: Creative & Production Factors (Genres, Producers, Studios)**
    - **Issue Overview**: Multi-label fragmentation, high cardinality, inconsistent naming, Unknow value
 
    - **Solution**: Frequency grouping, name normalization
@@ -591,7 +646,7 @@ Full Pipeline
 
 ---
 
-**C. Theme C: Release Strategy (Aired, Episodes, Duration)**
+**D. Theme C: Release Strategy (Aired, Episodes, Duration)**
    - **Issue Overview**: Numeric, Datetime feature treated as text, fragmentation, high cardinality, inconsistent format, Unknow value
 
    - **Solution**: Convert to numeric, datetime type; Normalize format, Grouping into meaningful Episodes, Duration ranges and seasons
